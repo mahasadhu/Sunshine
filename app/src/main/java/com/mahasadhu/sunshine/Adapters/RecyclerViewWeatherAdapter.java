@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mahasadhu.sunshine.Objects.WeatherObj;
 import com.mahasadhu.sunshine.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,9 +39,10 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(WeatherViewholder holder, int position) {
         WeatherObj weatherObj = weatherObjs.get(position);
-        holder.textViewData.setText(weatherObj.getLocation() + " | Around " + String.valueOf(weatherObj.getTemp()) + " \u2103");
-        holder.textViewDTRecyclerViewRow.setText(weatherObj.getDT());
+        holder.textViewData.setText(weatherObj.getLocation() + " | Around " + String.valueOf(weatherObj.getTemp()) + weatherObj.getUnits());
+        holder.textViewDTRecyclerViewRow.setText(weatherObj.getFormattedDate());
         holder.textViewWeatherRecyclerViewRow.setText(weatherObj.getWeather());
+        Picasso.with(activity).load("http://openweathermap.org/img/w/"+weatherObj.getPngId()+".png").into(holder.imageViewWeatherIcon);
     }
 
     @Override
@@ -50,12 +53,14 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
     public class WeatherViewholder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView textViewData, textViewDTRecyclerViewRow, textViewWeatherRecyclerViewRow;
+        public ImageView imageViewWeatherIcon;
 
         public WeatherViewholder(View itemView) {
             super(itemView);
             textViewData = (TextView) itemView.findViewById(R.id.textViewRecyclerViewRow);
             textViewDTRecyclerViewRow = (TextView) itemView.findViewById(R.id.textViewDTRecyclerViewRow);
             textViewWeatherRecyclerViewRow = (TextView) itemView.findViewById(R.id.textViewWeatherRecyclerViewRow);
+            imageViewWeatherIcon = (ImageView) itemView.findViewById(R.id.imageViewWeatherIcon);
             itemView.setOnClickListener(this);
         }
 

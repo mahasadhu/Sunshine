@@ -1,5 +1,7 @@
 package com.mahasadhu.sunshine.Objects;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -9,12 +11,44 @@ import java.util.TimeZone;
  */
 
 public class WeatherObj {
-    private String location, formattedDate, weather;
+    private String location;
+    private String formattedDate;
+    private String weather;
+    private String units;
+    private String pngId;
     private long dt;
     private double temp, temp_min, temp_max;
+    private JSONObject jsonObjectData;
 
-    public String getDT(){
-        return formattedDate;
+    public String getPngId() {
+        return pngId;
+    }
+
+    public void setPngId(String pngId) {
+        this.pngId = pngId;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    public JSONObject getJsonObjectData() {
+        return jsonObjectData;
+    }
+
+    public void setJsonObjectData(JSONObject jsonObjectData) {
+        this.jsonObjectData = jsonObjectData;
+    }
+
+    public String getFormattedDate() {
+        Date date = new Date(dt*1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm (z)");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8")); // give a timezone reference for formating (see comment at the bottom
+        return sdf.format(date);
     }
 
     public String getWeather() {
@@ -39,11 +73,6 @@ public class WeatherObj {
 
     public void setDt(long dt) {
         this.dt = dt;
-        Date date = new Date(dt*1000L); // *1000 is to convert seconds to milliseconds
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss (z)"); // the format of your date
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm (z)");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8")); // give a timezone reference for formating (see comment at the bottom
-        formattedDate = sdf.format(date);
     }
 
     public double getTemp() {

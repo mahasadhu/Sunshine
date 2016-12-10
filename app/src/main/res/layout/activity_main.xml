@@ -10,10 +10,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mahasadhu.sunshine.Activity.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerViewDatas"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/textViewFailed"
+                android:visibility="invisible"
+                android:text="Failed to Retrieve Data"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefreshMainActivity">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerViewDatas"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
 
     <TextView
         android:layout_width="wrap_content"

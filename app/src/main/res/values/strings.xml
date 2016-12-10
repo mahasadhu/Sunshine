@@ -1,4 +1,26 @@
 <resources>
     <string name="app_name">Sunshine</string>
     <string name="weather_key">c45a0c2df2eabfece68d412bb557c833</string>
+
+    <string name="pref_location_key">sunshine_loc</string>
+    <string name="pref_location_title">Location</string>
+    <string name="pref_location_summary">Your Desired Weather Location</string>
+    <string name="pref_location_default">Denpasar</string>
+
+    <string name="pref_temp_unit_key">sunshine_units</string>
+    <string name="pref_temp_unit_title">Temperature Units</string>
+    <string name="pref_temp_unit_dialog_title">Choose One:</string>
+    <string name="pref_temp_unit_summary">Your Desired Weather Units</string>
+    <string-array name="units" >
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
+    </string-array>
+
+    <string-array name="unitValues" >
+        <item>metric</item>
+        <item>imperial</item>
+        <item>default</item>
+
+    </string-array>
 </resources>
