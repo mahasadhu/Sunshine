@@ -214,11 +214,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     null);
             int count = cursorData.getCount();
             Log.e("COUNT", String.valueOf(count));
-//
-//            for (int i = 0; i<cursorData.getCount(); i++){
-//                cursorData.moveToPosition(i);
-//                Log.e("DATA "+String.valueOf(i), cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_weather_name)));
-//            }
 
             if (count > 0){
                 for (int i = 0; i<cursorData.getCount(); i++){

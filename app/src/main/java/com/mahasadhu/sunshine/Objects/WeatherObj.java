@@ -12,7 +12,6 @@ import java.util.TimeZone;
 
 public class WeatherObj {
     private String location;
-    private String formattedDate;
     private String weather;
     private String units;
     private String pngId;
