@@ -214,33 +214,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     null);
             int count = cursorData.getCount();
             Log.e("COUNT", String.valueOf(count));
+//
+//            for (int i = 0; i<cursorData.getCount(); i++){
+//                cursorData.moveToPosition(i);
+//                Log.e("DATA "+String.valueOf(i), cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_weather_name)));
+//            }
 
-            for (int i = 0; i<cursorData.getCount(); i++){
-                cursorData.moveToPosition(i);
-                Log.e("DATA "+String.valueOf(i), cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_weather_name)));
-            }
-
-            for (int i = 0; i<cursorData.getCount(); i++){
-                try {
-                    JSONObject jsonObjectCursor = new JSONObject(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_jsonObjectData_name)));
-                    cursorData.moveToPosition(i);
-                    WeatherObj weatherObj = new WeatherObj();
-                    weatherObj.setLocation(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_location_name)));
-                    weatherObj.setJsonObjectData(jsonObjectCursor);
-                    weatherObj.setDt(cursorData.getLong(cursorData.getColumnIndex(WeatherContract.column_dt_name)));
-                    weatherObj.setTemp(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_name)));
-                    weatherObj.setTemp_min(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_min_name)));
-                    weatherObj.setTemp_max(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_max_name)));
-                    weatherObj.setWeather(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_weather_name)));
-                    weatherObj.setUnits(getDegree());
-                    weatherObj.setPngId(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_pngId_name)));
-                    weatherObjs.add(weatherObj);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            if (count > 0){
+                for (int i = 0; i<cursorData.getCount(); i++){
+                    try {
+                        JSONObject jsonObjectCursor = new JSONObject(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_jsonObjectData_name)));
+                        cursorData.moveToPosition(i);
+                        WeatherObj weatherObj = new WeatherObj();
+                        weatherObj.setLocation(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_location_name)));
+                        weatherObj.setJsonObjectData(jsonObjectCursor);
+                        weatherObj.setDt(cursorData.getLong(cursorData.getColumnIndex(WeatherContract.column_dt_name)));
+                        weatherObj.setTemp(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_name)));
+                        weatherObj.setTemp_min(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_min_name)));
+                        weatherObj.setTemp_max(cursorData.getDouble(cursorData.getColumnIndex(WeatherContract.column_temp_max_name)));
+                        weatherObj.setWeather(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_weather_name)));
+                        weatherObj.setUnits(getDegree());
+                        weatherObj.setPngId(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_pngId_name)));
+                        weatherObjs.add(weatherObj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            else textViewFailed.setVisibility(View.VISIBLE);
 
-//            textViewFailed.setVisibility(View.VISIBLE);
             recyclerViewWeatherAdapter.notifyDataSetChanged();
             cursorData.close();
         }
@@ -319,12 +321,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
         else if (item.getItemId() == R.id.menuMaps){
-            Uri.Builder builder = new Uri.Builder();
-            builder.scheme("geo")
-                    .path("0,0")
-                    .query("1600 Amphitheatre Parkway, CA");
-            Uri uri = builder.build();
-
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("geo:0,0?q="+sharedPreferences.getString(getString(R.string.pref_location_key), "Denpasar")));
 
