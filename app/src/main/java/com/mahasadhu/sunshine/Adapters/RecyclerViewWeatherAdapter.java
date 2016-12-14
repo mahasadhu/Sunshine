@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mahasadhu.sunshine.Objects.WeatherObj;
 import com.mahasadhu.sunshine.R;
+import com.mahasadhu.sunshine.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
         holder.textViewData.setText(weatherObj.getLocation() + " | Around " + String.valueOf(weatherObj.getTemp()) + weatherObj.getUnits());
         holder.textViewDTRecyclerViewRow.setText(weatherObj.getFormattedDate());
         holder.textViewWeatherRecyclerViewRow.setText(weatherObj.getWeather());
-        Picasso.with(activity).load("http://openweathermap.org/img/w/"+weatherObj.getPngId()+".png").into(holder.imageViewWeatherIcon);
+        Picasso.with(activity).load(Utility.pngBaseUrl+weatherObj.getPngId()+".png").into(holder.imageViewWeatherIcon);
     }
 
     @Override

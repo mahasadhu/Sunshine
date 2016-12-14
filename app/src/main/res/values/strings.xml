@@ -21,6 +21,11 @@
         <item>metric</item>
         <item>imperial</item>
         <item>default</item>
-
     </string-array>
+
+    <string name="title_share_weather">Share The Weather to...</string>
+    <string name="mime_type">text/plain</string>
+    <string name="weather_activity_title">Weather Details</string>
+    <string name="wind_unit_def">meter/sec</string>
+    <string name="wind_unit_imperial">miles/hour</string>
 </resources>

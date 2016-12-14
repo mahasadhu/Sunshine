@@ -48,13 +48,13 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        setTitle("Weather Details");
+        setTitle(getString(R.string.weather_activity_title));
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (sharedPreferences.getString(Utility.units, "").equals("imperial")) windUnit = "miles/hour";
-        else windUnit = "meter/sec";
+        if (sharedPreferences.getString(Utility.units, "").equals(getResources().getStringArray(R.array.unitValues)[1])) windUnit = getString(R.string.wind_unit_imperial);
+        else windUnit = getString(R.string.wind_unit_def);
 
         imageViewWeatherActivity = (ImageView) findViewById(R.id.imageViewWeatherActivity);
         textViewDTWeatherActivity = (TextView) findViewById(R.id.textViewDTWeatherActivity);
@@ -76,7 +76,7 @@ public class WeatherActivity extends AppCompatActivity {
             time = getFormattedDate(jsonObjectDetailWeather.getLong("dt"));
             temp = String.valueOf(jsonObjectDetailWeather.getJSONObject("main").getDouble("temp"));
 
-            Picasso.with(this).load("http://openweathermap.org/img/w/"+jsonObjectDetailWeather.getJSONArray("weather").getJSONObject(0).getString("icon")+".png").into(imageViewWeatherActivity);
+            Picasso.with(this).load(Utility.pngBaseUrl+jsonObjectDetailWeather.getJSONArray("weather").getJSONObject(0).getString("icon")+".png").into(imageViewWeatherActivity);
             textViewDTWeatherActivity.setText(place +
                     ",\n" +
                     time);
@@ -111,7 +111,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public String getFormattedDate(long dt) {
         Date date = new Date(dt*1000L); // *1000 is to convert seconds to milliseconds
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm\n(z)");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+8")); // give a timezone reference for formating (see comment at the bottom
         return sdf.format(date);
     }
@@ -123,8 +123,9 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     String getDegree(){
-        if (sharedPreferences.getString(getString(R.string.pref_temp_unit_key), "metric").equals("metric")) return "\u00B0C";
-        else if (sharedPreferences.getString(getString(R.string.pref_temp_unit_key), "metric").equals("imperial")) return "\u00B0F";
+        String defValue = getResources().getStringArray(R.array.unitValues)[0];
+        if (sharedPreferences.getString(getString(R.string.pref_temp_unit_key), defValue).equals(defValue)) return "\u00B0C";
+        else if (sharedPreferences.getString(getString(R.string.pref_temp_unit_key), defValue).equals(defValue)) return "\u00B0F";
         else return "\u00B0K";
     }
 
@@ -143,8 +144,8 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     void shareWeather(){
-        String mimeType = "text/plain";
-        String title = "Share The Weather to...";
+        String mimeType = getString(R.string.mime_type);
+        String title = getString(R.string.title_share_weather);
         String text = "It's around " + temp + getDegree() + " with " + desc + " at " + place + " \non " + time + "\n\n\n#SunshineApp #AndroidKejar #Udacity";
 
         Intent intentShare = ShareCompat.IntentBuilder.from(this)

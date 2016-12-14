@@ -216,10 +216,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Log.e("COUNT", String.valueOf(count));
 
             if (count > 0){
-                for (int i = 0; i<cursorData.getCount(); i++){
+                while (cursorData.moveToNext()){
                     try {
                         JSONObject jsonObjectCursor = new JSONObject(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_jsonObjectData_name)));
-                        cursorData.moveToPosition(i);
                         WeatherObj weatherObj = new WeatherObj();
                         weatherObj.setLocation(cursorData.getString(cursorData.getColumnIndex(WeatherContract.column_location_name)));
                         weatherObj.setJsonObjectData(jsonObjectCursor);
@@ -233,13 +232,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         weatherObjs.add(weatherObj);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        cursorData.close();
+                    }
+                    finally {
+                        cursorData.close();
                     }
                 }
             }
             else textViewFailed.setVisibility(View.VISIBLE);
 
             recyclerViewWeatherAdapter.notifyDataSetChanged();
-            cursorData.close();
         }
     }
 
